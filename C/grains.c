@@ -9,8 +9,8 @@ int main(void) {
             arrayOfGrains[i] = grainOnSquare;
          }
          grainOnSquare *= 2;
-
          arrayOfGrains[i] = grainOnSquare;
+         printf("%d\n", arrayOfGrains[i]);
     }
 
     printf("What square do you wish to know it\'s number of grains? ");
