@@ -1,24 +1,35 @@
 #include <stdio.h>
 
 int main(void) {
-    int grainOnSquare = 1;
-    int arrayOfGrains[64];
+    unsigned long long grainOnSquare = 1;
+    unsigned long long arrayOfGrains[64];
+    unsigned long long totalGrains = 1;
 
     for (int i = 0; i < 64; i++) {
          if (i == 0) {
             arrayOfGrains[i] = grainOnSquare;
-            printf("%d\n", arrayOfGrains[i]);
+            // printf("%llu\n", arrayOfGrains[i]);
          }
-         grainOnSquare *= 2;
-         arrayOfGrains[i] = grainOnSquare;
-         printf("%d\n", arrayOfGrains[i]);
+         else {
+            grainOnSquare *= 2;
+            arrayOfGrains[i] = grainOnSquare;
+            totalGrains += grainOnSquare;
+            // printf("%llu\n", arrayOfGrains[i]);
+         }
     }
 
     printf("What square do you wish to know it\'s number of grains? ");
     int wishedSquare = 0;
     fflush(stdout);
-    scanf("%d", &wishedSquare);
-    printf("The number of")
+    int result = scanf("%d", &wishedSquare);
+
+    if (result == 1) {
+        printf("The number of grains at square %d is: %llu\n", wishedSquare, arrayOfGrains[wishedSquare - 1]);
+        printf("The total number of grains on the chessboard is: %llu\n", totalGrains);
+    }
+    else {
+        printf("An invalid value was entered. Try again.");
+    }
 
     return 0;
 }
