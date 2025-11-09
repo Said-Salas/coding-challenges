@@ -1,17 +1,28 @@
 #include <stdio.h>
+#include <gmp.h>
 
 int main(void) {
 
-    int grainOnSquare = 1;
-    int arrayOfGrains[64];
-
+    mpz_t grainOnSquare, arrayOfGrains[64];
+    mpz_init_set_ui(grainOnSquare, 1);
+    
     for (int i = 0; i < 64; i++) {
-        grainOnSquare *= 2;
-        arrayOfGrains[i] = grainOnSquare;
-        
+        mpz_init(arrayOfGrains[i]);
+        mpz_set(arrayOfGrains[i], grainOnSquare);
+        mpz_mul_ui(grainOnSquare, grainOnSquare, 2);
     }
 
-    for(int i = 0; i < 64; i++) printf("%d", arrayOfGrains[i]);
+    int choosenSquare = 1;
+    printf("Which square do you want to know it\'s value (left to right, top to bottom)? ");
+    fflush(stdout);
+    scanf("%d", &choosenSquare);
+    gmp_printf("The value at square %d is %Zd\n", choosenSquare, arrayOfGrains[choosenSquare - 1]);
+
+    for (int i = 0; i < 64; i++) {
+        mpz_clear(arrayOfGrains[i]);
+    }
+    mpz_clear(grainOnSquare);
+    
     return 0;
 }
 
