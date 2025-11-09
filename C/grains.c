@@ -7,6 +7,7 @@ int main(void) {
     for (int i = 0; i < 64; i++) {
          if (i == 0) {
             arrayOfGrains[i] = grainOnSquare;
+            printf("%d\n", arrayOfGrains[i]);
          }
          grainOnSquare *= 2;
          arrayOfGrains[i] = grainOnSquare;
