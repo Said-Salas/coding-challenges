@@ -26,20 +26,21 @@ int main(void) {
     char input[100];
 
     do {
-        printf("What color do you see?");
+        printf("What color do you see? Color: (type \"exit\" to end program) ");
         scanf("%99s", input);
+        
         toLowerCase(input);
         
-        if (strcmp(input, 'exit') == 0) {
+        if (strcmp(input, "exit") == 0) {
             break;
         }
 
         int resValue = colorCode(input);
-        if (resValue != -1) {
-            printf("The color you entered does not have an assigned resistance value yet");
+        if (resValue == -1) {
+            printf("The color you entered does not have an assigned resistance value yet\n");
         }
         else {
-            printf("%s has a resistance value of: &d", input, resValue);
+            printf("%s has a resistance value of: %d\n", input, resValue);
         }
 
     } while (1); //infinite loop
