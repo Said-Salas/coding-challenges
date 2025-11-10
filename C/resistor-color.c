@@ -2,6 +2,11 @@
 #include <ctype.h>
 #include <string.h>
 
+const char *colors[] = {
+    "black", "brown", "red", "orange", "yellow", 
+    "green", "blue", "violet", "grey", "white"
+};
+
 void toLowerCase(char *str) {
     for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
@@ -9,13 +14,12 @@ void toLowerCase(char *str) {
 }
 
 int main(void) {
-    char input[100] = "";
+    char input[100];
 
     do {
         printf("What color do you see?");
-        fflush(stdout);
-        scanf("%s", &input);
-
+        scanf("%99s", input);
+        toLowerCase(input);
 
 
     } while (input != 'EXIT');
