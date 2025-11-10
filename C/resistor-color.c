@@ -24,11 +24,12 @@ void toLowerCase(char *str) {
 
 int main(void) {
     char input[100];
+    printf("(type \"exit\" to end program)\n");
 
     do {
-        printf("What color do you see? Color: (type \"exit\" to end program) ");
+        printf("What color do you see? Color: e");
         scanf("%99s", input);
-        
+       
         toLowerCase(input);
         
         if (strcmp(input, "exit") == 0) {
