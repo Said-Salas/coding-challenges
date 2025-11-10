@@ -7,6 +7,15 @@ const char *colors[] = {
     "green", "blue", "violet", "grey", "white"
 };
 
+int colorCode(const char *color) {
+    for (int i = 0; i < 10; i++) {
+        if (strcmp(color, colors[i]) == 0) {
+            return i;
+        }
+    }
+    return -1;  //Means => 'Not found'
+}
+
 void toLowerCase(char *str) {
     for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
@@ -20,9 +29,20 @@ int main(void) {
         printf("What color do you see?");
         scanf("%99s", input);
         toLowerCase(input);
+        
+        if (strcmp(input, 'exit') == 0) {
+            break;
+        }
 
+        int resValue = colorCode(input);
+        if (resValue != -1) {
+            printf("The color you entered does not have an assigned resistance value yet");
+        }
+        else {
+            printf("%s has a resistance value of: &d", input, resValue);
+        }
 
-    } while (input != 'EXIT');
+    } while (1); //infinite loop
     
    
     return 0;
