@@ -1,8 +1,26 @@
 #include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+void toLowerCase(char *str) {
+    for (int i = 0; str[i]; i++) {
+        str[i] = tolower(str[i]);
+    }
+}
 
 int main(void) {
+    char input[100] = "";
 
-    printf("What color ")
+    do {
+        printf("What color do you see?");
+        fflush(stdout);
+        scanf("%s", &input);
+
+
+
+    } while (input != 'EXIT');
+    
+   
     return 0;
 }
 
