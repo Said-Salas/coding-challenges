@@ -15,7 +15,7 @@ const char *colors[] = {
 
 int colorCode(char *color) {
     for (int i = 0; i < 10; i++) {
-        if (strcmp(color, colors[i])) {
+        if (strcmp(color, colors[i]) == 0) {
             return i;
         }
     }
@@ -33,7 +33,6 @@ int main(void) {
         toLowerCase(input);
 
         if (strcmp(input, "exit") == 0) break; 
-        
         
         int resistanceValue = colorCode(input);
 
