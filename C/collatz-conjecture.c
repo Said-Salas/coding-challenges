@@ -2,10 +2,15 @@
 
 int main(void) {
     int startingNumber = 0;
-    int numberSteps = 0;
+    int numberSteps = 1;
     printf("Select starting positive number: ");
     scanf("%d", &startingNumber);
     int endNumber = startingNumber;
+
+    if (startingNumber <= 1) {
+        printf("Please enter a positive integer greater than 1");
+        return 0;
+    }
 
     do {
         if (endNumber % 2 == 0) {
