@@ -5,18 +5,22 @@ int main(void) {
     int numberSteps = 0;
     printf("Select starting positive number: ");
     scanf("%d", &startingNumber);
+    int endNumber = startingNumber;
 
     do {
-        if (startingNumber % 2 == 0) {
-            startingNumber /= 2;
-            
+        if (endNumber % 2 == 0) {
+            endNumber /= 2;
+            numberSteps += 1;
         }
         else {
-            startingNumber *= 3;
-            startingNumber += 1;
+            endNumber *= 3;
+            endNumber += 1;
+            numberSteps += 1;
         }
 
-    } while (number != 1);
+    } while (endNumber != 1);
+
+    printf("The number of steps that took number %d to reach 1 are: %d", startingNumber, numberSteps);
 
     return 0;
 }
