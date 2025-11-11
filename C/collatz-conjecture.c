@@ -2,27 +2,31 @@
 
 int main(void) {
     int startingNumber = 0;
-    int numberSteps = 1;
+    int numberSteps = 0;
     printf("Select starting positive number: ");
     scanf("%d", &startingNumber);
     int endNumber = startingNumber;
 
-    if (startingNumber <= 1) {
+    if (startingNumber < 1) {
         printf("Please enter a positive integer greater than 1");
         return 0;
     }
 
     do {
-        if (endNumber % 2 == 0) {
-            endNumber /= 2;
-            numberSteps += 1;
+        if (endNumber == 1){
+            break;
         }
         else {
-            endNumber *= 3;
-            endNumber += 1;
-            numberSteps += 1;
+            if (endNumber % 2 == 0) {
+                endNumber /= 2;
+                numberSteps += 1;
+            }
+            else {
+                endNumber *= 3;
+                endNumber += 1;
+                numberSteps += 1;
+            }
         }
-
     } while (endNumber != 1);
 
     printf("The number of steps that took number %d to reach 1 are: %d", startingNumber, numberSteps);
