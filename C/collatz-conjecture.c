@@ -2,9 +2,21 @@
 
 int main(void) {
     int startingNumber = 0;
+    int numberSteps = 0;
     printf("Select starting positive number: ");
     scanf("%d", &startingNumber);
-    
+
+    do {
+        if (startingNumber % 2 == 0) {
+            startingNumber /= 2;
+            
+        }
+        else {
+            startingNumber *= 3;
+            startingNumber += 1;
+        }
+
+    } while (number != 1);
 
     return 0;
 }
