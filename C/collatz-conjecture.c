@@ -7,25 +7,25 @@ int main(void) {
     scanf("%d", &startingNumber);
     int endNumber = startingNumber;
 
-    if (startingNumber < 1) {
+    if (startingNumber <= 0) {
         printf("Please enter a positive integer greater than 1");
+        return 1;
+    }
+
+    if (startingNumber == 1) {
+        printf("The number of steps that took number 1 to reach 1 are: 1");
         return 0;
     }
 
     do {
-        if (endNumber == 1){
-            break;
+        if (endNumber % 2 == 0) {
+            endNumber /= 2;
+            numberSteps += 1;
         }
         else {
-            if (endNumber % 2 == 0) {
-                endNumber /= 2;
-                numberSteps += 1;
-            }
-            else {
-                endNumber *= 3;
-                endNumber += 1;
-                numberSteps += 1;
-            }
+            endNumber *= 3;
+            endNumber += 1;
+            numberSteps += 1;
         }
     } while (endNumber != 1);
 
