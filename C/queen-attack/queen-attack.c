@@ -1,9 +1,13 @@
 #include <stdio.h>
 
 int main(void) {
-    char position = '';
+    char positionOne = "";
     printf("Enter position of white queen: ");
-    scanf("%s", &position);
+    scanf("%s", &positionOne);
+
+    char positionTwo = "";
+    printf("Enter position og black queen: ");
+    scanf("%s", &positionTwo);
 
     return 0;
 }
