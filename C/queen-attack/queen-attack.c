@@ -7,9 +7,15 @@ int chessPosition (int *column, int *row) {
         printf("Please enter a valid row value\n");
         return 1;
     }
-    int tilePosition = 1;
-    tilePosition *= row;
 
+    if (row == 1) {
+        int tilePosition = 0;
+    }
+    else {
+        tilePosition = 8;
+        tilePosition *= row - 1;
+    }
+    
     int columnValue = 0;
 
     switch(column) {
@@ -81,10 +87,10 @@ int main(void) {
         return 0;
     }
 
-    const positionValueOne = chessPosition(columnOne, rowOne);
-    const positionValueTwo = chessPosition(columnTwo, rowTwo);
+    const higherPosition = (chessPosition(columnOne, rowOne) > chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
+    const lowerPosition = (chessPosition(columnOne, rowOne) < chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
 
-    if ((positionValueOne % 2 != 0 && positionValueTwo % 2 != 0) || (positionValueOne % 2 == 0 && positionValueTwo % 2 == 0)) {
+    if () {
         printf("Queens are in a diagonal, therefore can attack themselves\n");
     }
 
