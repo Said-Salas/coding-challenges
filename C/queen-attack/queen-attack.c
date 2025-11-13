@@ -3,6 +3,10 @@
 #include <ctype.h>
 
 int chessPosition (int *column, int *row) {
+    if (row > 8) {
+        printf("Please enter a valid row value");
+        return 1;
+    }
     int tilePosition = 1;
     tilePosition *= row;
 
@@ -42,6 +46,13 @@ int chessPosition (int *column, int *row) {
     return tilePosition;
 }
 
+int IsNumber (char *number) {
+    if (!isdigit(number)) {
+        printf("Please enter a valid row number");
+        return 0;
+    }
+}
+
 void toLowerCase(char *column) {
     column = tolower(column);
 }
@@ -58,7 +69,7 @@ int main(void) {
     int lenghtOne = strlen(positionOne);
     int lengthTwo = strlen(positionTwo);
    
-    if (lengthOne > 2 || lengthTwo > 2) {
+    if ((lengthOne > 2 || lenghtOne < 2) || (lengthTwo > 2 || lenghtOne < 2)) {
         printf("Please enter a valid chess position");
         return 1;
     }
