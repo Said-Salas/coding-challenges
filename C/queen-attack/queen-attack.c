@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include <string.h> 
 
-char chessPositions
+int chessPosition (int *row, int *column) {
+    int tilePosition = 1;
+    tilePosition *= row;
+}
 
 int main(void) {
     char positionOne[] = "";
@@ -15,7 +19,10 @@ int main(void) {
     char columnTwo = positionTwo[0];
     char rowTwo = positionTwo[1];
 
-
+    if ((strcmp(columnOne, columnTwo) == 0) || (strcmp(rowOne, rowTwo)) == 0) {
+        printf("Queens can attack themselves");
+        return 0;
+    }
 
     return 0;
 }
