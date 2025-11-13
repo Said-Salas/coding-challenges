@@ -54,54 +54,61 @@ int chessPosition (int *column, int *row) {
 
 int main(void) {
 
-    char positionOne[] = "";
-    char positionTwo[] = "";
+    do {
+        printf("Type /"exit/" to end program");
 
-    printf("Enter position of white queen: ");
-    scanf("%s", &positionOne);
-    printf("Enter position og black queen: ");
-    scanf("%s", &positionTwo);
-   
-    if ((strlen(positionOne) > 2 || strlen(positionOne) < 2) || (strlen(positionTwo) > 2 || strlen(positionTwo) < 2)) {
-        printf("Please enter a valid chess position\n");
-        return 1;
-    }
+        char positionOne[] = "";
+        char positionTwo[] = "";
 
-    if (!isalpha(tolower(positionOne[0])) || !isalpha(tolower(positionTwo[0]))) {
-        printf("Please enter a valid column letter\n");
-        return 1;
-    }
+        printf("Enter position of white queen: ");
+        scanf("%s", &positionOne);
+        printf("Enter position og black queen: ");
+        scanf("%s", &positionTwo);
 
-    if (!isdigit(positionOne[1]) || !isdigit(positionTwo[1])) {
-        printf("Please enter a valid row number\n");
-        return 1;
-    }
-
-    char columnOne = tolower(positionOne[0]);
-    char columnTwo = tolower(positionTwo[0]);
-
-    int rowOne = atoi(positionOne[1]);
-    int rowTwo = atoi(positionTwo[1]);
-
-    if ((strcmp(columnOne, columnTwo) == 0) && (rowOne == rowTwo)) {
-        printf("Positions must be different\n");
-        return 1;
-    }
+        if ((tolower(positionOne) == "exit") || (tolower(positionTwo) == "exit")) break;
     
-    if ((strcmp(columnOne, columnTwo) == 0) || (rowOne == rowTwo)) {
-        printf("Queens can attack themselves\n");
-        return 0;
-    }
+        if ((strlen(positionOne) > 2 || strlen(positionOne) < 2) || (strlen(positionTwo) > 2 || strlen(positionTwo) < 2)) {
+            printf("Please enter a valid chess position\n");
+            return 1;
+        }
 
-    int higherPosition = (chessPosition(columnOne, rowOne) > chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
-    int lowerPosition = (chessPosition(columnOne, rowOne) < chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
+        if (!isalpha(tolower(positionOne[0])) || !isalpha(tolower(positionTwo[0]))) {
+            printf("Please enter a valid column letter\n");
+            return 1;
+        }
 
-    if (((higherPosition - lowerPosition) % 7 == 0) || ((higherPosition - lowerPosition) % 9 == 0)) {
-        printf("Queens are in a diagonal, therefore can attack themselves\n");
-    }
-    else {
-        printf("Your queens can't attack each other currently");
-    }
+        if (!isdigit(positionOne[1]) || !isdigit(positionTwo[1])) {
+            printf("Please enter a valid row number\n");
+            return 1;
+        }
+
+        char columnOne = tolower(positionOne[0]);
+        char columnTwo = tolower(positionTwo[0]);
+
+        int rowOne = atoi(positionOne[1]);
+        int rowTwo = atoi(positionTwo[1]);
+
+        if ((strcmp(columnOne, columnTwo) == 0) && (rowOne == rowTwo)) {
+            printf("Positions must be different\n");
+            return 1;
+        }
+        
+        if ((strcmp(columnOne, columnTwo) == 0) || (rowOne == rowTwo)) {
+            printf("Queens can attack themselves\n");
+            return 0;
+        }
+
+        int higherPosition = (chessPosition(columnOne, rowOne) > chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
+        int lowerPosition = (chessPosition(columnOne, rowOne) < chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
+
+        if (((higherPosition - lowerPosition) % 7 == 0) || ((higherPosition - lowerPosition) % 9 == 0)) {
+            printf("Queens are in a diagonal, therefore can attack themselves\n");
+        }
+        else {
+            printf("Your queens can't attack each other currently");
+        }
+
+    } while (1 > 0);
 
     return 0;
 }
