@@ -4,7 +4,7 @@
 
 int chessPosition (int *column, int *row) {
     if (row > 8) {
-        printf("Please enter a valid row value");
+        printf("Please enter a valid row value\n");
         return 1;
     }
     int tilePosition = 1;
@@ -38,23 +38,12 @@ int chessPosition (int *column, int *row) {
             columnValue = 8;
             break;
         default:
-            printf("That column does not exist on the chessboard");
+            printf("That column does not exist on the chessboard\n");
             return 1;
     }
 
     tilePosition += columnValue;
     return tilePosition;
-}
-
-int IsNumber (char *number) {
-    if (!isdigit(number)) {
-        printf("Please enter a valid row number");
-        return 0;
-    }
-}
-
-void toLowerCase(char *column) {
-    column = tolower(column);
 }
 
 int main(void) {
@@ -65,31 +54,38 @@ int main(void) {
     scanf("%s", &positionOne);
     printf("Enter position og black queen: ");
     scanf("%s", &positionTwo);
-
-    int lenghtOne = strlen(positionOne);
-    int lengthTwo = strlen(positionTwo);
    
-    if ((lengthOne > 2 || lenghtOne < 2) || (lengthTwo > 2 || lenghtOne < 2)) {
-        printf("Please enter a valid chess position");
+    if ((strlen(positionOne) > 2 || strlen(positionOne) < 2) || (strlen(positionTwo) > 2 || strlen(positionTwo) < 2)) {
+        printf("Please enter a valid chess position\n");
         return 1;
     }
 
-    char columnOne = toLowerCase(positionOne[0]);
-    char rowOne = toLowerCase(positionOne[1]);
+    if (!isalpha(tolower(positionOne[0])) || !isalpha(tolower(positionTwo[0]))) {
+        printf("Please enter a valid column letter\n");
+        return 1;
+    }
 
-    char columnTwo = positionTwo[0];
-    char rowTwo = positionTwo[1];
+    if (!isdigit(positionOne[1]) || !isdigit(positionTwo[1])) {
+        printf("Please enter a valid row number\n");
+        return 1;
+    }
 
-    if ((strcmp(columnOne, columnTwo) == 0) || (strcmp(rowOne, rowTwo)) == 0) {
-        printf("Queens can attack themselves");
+    char columnOne = tolower(positionOne[0]);
+    char columnTwo = tolower(positionTwo[0]);
+
+    int rowOne = atoi(positionOne[1]);
+    int rowTwo = atoi(positionTwo[1]);
+    
+    if ((strcmp(columnOne, columnTwo) == 0) || (rowOne == rowTwo)) {
+        printf("Queens can attack themselves\n");
         return 0;
     }
 
-    const positionOne = chessPosition(columnOne, rowOne);
-    const positionTwo = chessPosition(columnTwo, rowTwo);
+    const positionValueOne = chessPosition(columnOne, rowOne);
+    const positionValueTwo = chessPosition(columnTwo, rowTwo);
 
-    if ((positionOne % 2 != 0 && positionTwo % 2 != 0) || (positionOne % 2 == 0 && positionTwo % 2 == 0)) {
-        printf("Queens are in a diagonal, therefore can attack themselves");
+    if ((positionValueOne % 2 != 0 && positionValueTwo % 2 != 0) || (positionValueOne % 2 == 0 && positionValueTwo % 2 == 0)) {
+        printf("Queens are in a diagonal, therefore can attack themselves\n");
     }
 
     return 0;
