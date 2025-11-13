@@ -1,13 +1,21 @@
 #include <stdio.h>
 
+char chessPositions
+
 int main(void) {
-    char positionOne = "";
+    char positionOne[] = "";
     printf("Enter position of white queen: ");
     scanf("%s", &positionOne);
+    char columnOne = positionOne[0];
+    char rowOne = positionOne[1];
 
-    char positionTwo = "";
+    char positionTwo[] = "";
     printf("Enter position og black queen: ");
     scanf("%s", &positionTwo);
+    char columnTwo = positionTwo[0];
+    char rowTwo = positionTwo[1];
+
+
 
     return 0;
 }
