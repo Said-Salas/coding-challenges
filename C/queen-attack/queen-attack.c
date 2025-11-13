@@ -4,6 +4,38 @@
 int chessPosition (int *row, int *column) {
     int tilePosition = 1;
     tilePosition *= row;
+
+    int columnValue = 0;
+
+    switch(column) {
+        case 'a':
+            columnValue = 1;
+            break;
+        case 'b':
+            columnValue = 2;
+            break;
+        case 'c':
+            columnValue = 3;
+            break;
+        case 'd':
+            columnValue = 4;
+            break;
+        case 'e':
+            columnValue = 5;
+            break;
+        case 'f':
+            columnValue = 6;
+            break;
+        case 'g':
+            columnValue = 7;
+            break;
+        case 'h':
+            columnValue = 8;
+            break;
+        default:
+            printf("That column does not exist on the chessboard");
+            return 1;
+    }
 }
 
 int main(void) {
