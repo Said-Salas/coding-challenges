@@ -53,6 +53,7 @@ int chessPosition (int *column, int *row) {
 }
 
 int main(void) {
+
     char positionOne[] = "";
     char positionTwo[] = "";
 
@@ -81,17 +82,25 @@ int main(void) {
 
     int rowOne = atoi(positionOne[1]);
     int rowTwo = atoi(positionTwo[1]);
+
+    if ((strcmp(columnOne, columnTwo) == 0) && (rowOne == rowTwo)) {
+        printf("Positions must be different\n");
+        return 1;
+    }
     
     if ((strcmp(columnOne, columnTwo) == 0) || (rowOne == rowTwo)) {
         printf("Queens can attack themselves\n");
         return 0;
     }
 
-    const higherPosition = (chessPosition(columnOne, rowOne) > chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
-    const lowerPosition = (chessPosition(columnOne, rowOne) < chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
+    int higherPosition = (chessPosition(columnOne, rowOne) > chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
+    int lowerPosition = (chessPosition(columnOne, rowOne) < chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
 
-    if () {
+    if (((higherPosition - lowerPosition) % 7 == 0) || ((higherPosition - lowerPosition) % 9 == 0)) {
         printf("Queens are in a diagonal, therefore can attack themselves\n");
+    }
+    else {
+        printf("Your queens can't attack each other currently");
     }
 
     return 0;
