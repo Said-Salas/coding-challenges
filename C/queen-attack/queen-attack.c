@@ -8,8 +8,9 @@ int chessPosition (int *column, int *row) {
         return 1;
     }
 
+    int tilePosition;
     if (row == 1) {
-        int tilePosition = 0;
+        tilePosition = 0;
     }
     else {
         tilePosition = 8;
