@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h> 
+#include <ctype.h>
 
-int chessPosition (int *row, int *column) {
+int chessPosition (int *column, int *row) {
     int tilePosition = 1;
     tilePosition *= row;
 
@@ -36,24 +37,48 @@ int chessPosition (int *row, int *column) {
             printf("That column does not exist on the chessboard");
             return 1;
     }
+
+    tilePosition += columnValue;
+    return tilePosition;
+}
+
+void toLowerCase(char *column) {
+    column = tolower(column);
 }
 
 int main(void) {
     char positionOne[] = "";
+    char positionTwo[] = "";
+
     printf("Enter position of white queen: ");
     scanf("%s", &positionOne);
-    char columnOne = positionOne[0];
-    char rowOne = positionOne[1];
-
-    char positionTwo[] = "";
     printf("Enter position og black queen: ");
     scanf("%s", &positionTwo);
+
+    int lenghtOne = strlen(positionOne);
+    int lengthTwo = strlen(positionTwo);
+   
+    if (lengthOne > 2 || lengthTwo > 2) {
+        printf("Please enter a valid chess position");
+        return 1;
+    }
+
+    char columnOne = toLowerCase(positionOne[0]);
+    char rowOne = toLowerCase(positionOne[1]);
+
     char columnTwo = positionTwo[0];
     char rowTwo = positionTwo[1];
 
     if ((strcmp(columnOne, columnTwo) == 0) || (strcmp(rowOne, rowTwo)) == 0) {
         printf("Queens can attack themselves");
         return 0;
+    }
+
+    const positionOne = chessPosition(columnOne, rowOne);
+    const positionTwo = chessPosition(columnTwo, rowTwo);
+
+    if ((positionOne % 2 != 0 && positionTwo % 2 != 0) || (positionOne % 2 == 0 && positionTwo % 2 == 0)) {
+        printf("Queens are in a diagonal, therefore can attack themselves");
     }
 
     return 0;
