@@ -2,8 +2,8 @@
 #include <string.h> 
 #include <ctype.h>
 
-int chessPosition (char *column, int *row) {
-    if (*row > 8) {
+int chessPosition (char column, int row) {
+    if (row > 8) {
         printf("Please enter a valid row value\n");
         return 1;
     }
@@ -19,7 +19,7 @@ int chessPosition (char *column, int *row) {
     
     int columnValue = 0;
 
-    switch(*column) {
+    switch(column) {
         case 'a':
             columnValue = 1;
             break;
@@ -56,17 +56,16 @@ int chessPosition (char *column, int *row) {
 int main(void) {
 
     do {
-        printf("Type /"exit/" to end program");
+        printf("Type \"exit\" to end program\n");
 
-        char positionOne[] = "";
-        char positionTwo[] = "";
+        char positionOne[3] = "";
+        char positionTwo[3] = "";
 
         printf("Enter position of white queen: ");
-        scanf("%s", &positionOne);
-        printf("Enter position og black queen: ");
-        scanf("%s", &positionTwo);
-
-        if ((tolower(positionOne) == "exit") || (tolower(positionTwo) == "exit")) break;
+        scanf("%s", positionOne);
+        if (strcmp(positionOne, "exit") == 0) break;
+        printf("Enter position of black queen: ");
+        scanf("%s", positionTwo);
     
         if ((strlen(positionOne) > 2 || strlen(positionOne) < 2) || (strlen(positionTwo) > 2 || strlen(positionTwo) < 2)) {
             printf("Please enter a valid chess position\n");
@@ -86,15 +85,15 @@ int main(void) {
         char columnOne = tolower(positionOne[0]);
         char columnTwo = tolower(positionTwo[0]);
 
-        int rowOne = atoi(positionOne[1]);
-        int rowTwo = atoi(positionTwo[1]);
+        int rowOne = positionOne[1] - '0';
+        int rowTwo = positionTwo[1] - '0';
 
-        if ((strcmp(columnOne, columnTwo) == 0) && (rowOne == rowTwo)) {
+        if ((columnOne == columnTwo) && (rowOne == rowTwo)) {
             printf("Positions must be different\n");
             return 1;
         }
         
-        if ((strcmp(columnOne, columnTwo) == 0) || (rowOne == rowTwo)) {
+        if ((columnOne == columnTwo) || (rowOne == rowTwo)) {
             printf("Queens can attack themselves\n");
             return 0;
         }
