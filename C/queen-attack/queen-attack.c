@@ -2,8 +2,8 @@
 #include <string.h> 
 #include <ctype.h>
 
-int chessPosition (int *column, int *row) {
-    if (row > 8) {
+int chessPosition (char *column, int *row) {
+    if (*row > 8) {
         printf("Please enter a valid row value\n");
         return 1;
     }
@@ -19,7 +19,7 @@ int chessPosition (int *column, int *row) {
     
     int columnValue = 0;
 
-    switch(column) {
+    switch(*column) {
         case 'a':
             columnValue = 1;
             break;
