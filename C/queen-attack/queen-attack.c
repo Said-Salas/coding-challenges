@@ -7,28 +7,28 @@ int getColumnValue (char column) {
 
     switch(column) {
         case 'a':
-            columnValue = 1;
+            columnValue = 0;
             break;
         case 'b':
-            columnValue = 2;
+            columnValue = 1;
             break;
         case 'c':
-            columnValue = 3;
+            columnValue = 2;
             break;
         case 'd':
-            columnValue = 4;
+            columnValue = 3;
             break;
         case 'e':
-            columnValue = 5;
+            columnValue = 4;
             break;
         case 'f':
-            columnValue = 6;
+            columnValue = 5;
             break;
         case 'g':
-            columnValue = 7;
+            columnValue = 6;
             break;
         case 'h':
-            columnValue = 8;
+            columnValue = 7;
             break;
         default:
             printf("That column does not exist on the chessboard\n");
@@ -38,24 +38,7 @@ int getColumnValue (char column) {
     return columnValue;
 }
 
-int chessPosition (int column, int row) {
-    if (row > 8) {
-        printf("Please enter a valid row value\n");
-        return 1;
-    }
 
-    int tilePosition;
-    if (row == 1) {
-        tilePosition = 0;
-    }
-    else {
-        tilePosition = 8;
-        tilePosition *= row - 1;
-    }
-    
-    tilePosition += column;
-    return tilePosition;
-}
 
 int main(void) {
     printf("Type \"exit\" to end program\n");
@@ -88,8 +71,8 @@ int main(void) {
         int columnOne = getColumnValue(tolower(positionOne[0]));
         int columnTwo = getColumnValue(tolower(positionTwo[0]));
 
-        int rowOne = positionOne[1] - '0';
-        int rowTwo = positionTwo[1] - '0';
+        int rowOne = positionOne[1] - '1';
+        int rowTwo = positionTwo[1] - '1';
 
         if ((columnOne == columnTwo) && (rowOne == rowTwo)) {
             printf("Positions must be different\n");
@@ -100,10 +83,7 @@ int main(void) {
             printf("Queens can attack themselves\n");
         }
         else {
-            int higherPosition = (chessPosition(columnOne, rowOne) > chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
-            int lowerPosition = (chessPosition(columnOne, rowOne) < chessPosition(columnTwo, rowTwo)) ? chessPosition(columnOne, rowOne) : chessPosition(columnTwo, rowTwo);
-
-            if (((higherPosition - lowerPosition) % 7 == 0) || ((higherPosition - lowerPosition) % 9 == 0)) {
+            if () {
                 printf("Queens are in a diagonal, therefore can attack themselves\n");
             }
             else {
