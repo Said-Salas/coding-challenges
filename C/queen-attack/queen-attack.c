@@ -47,7 +47,8 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
         return NULL;  //If memory allocation fails, we return NULL (standard way to indicate failure in C)
     }
 
-    
+    int currentColumn, currentRow, potentialColumn, potentialRow; //we modify current column and row, and becomesare our potential column and row, and is 'potential' because we validate it. If truthy, currentColumn, currentRow = potentialColumn, potentialRow. If falsy, we break/stop the loop.
+
 }
 
 int main(void) {
