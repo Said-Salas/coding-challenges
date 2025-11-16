@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h> 
 #include <ctype.h>
+#include <stdlib.h>
 
 int getColumnValue (char column) {
     int columnValue = 0;
@@ -38,7 +39,16 @@ int getColumnValue (char column) {
     return columnValue;
 }
 
+int** getDiagonals(const int startingArray[2], int* arraySize) {
+    int** totalDiagonals = malloc(8 * sizeof(int*)); //Here we start with an arbitrary memory capacity, we say 'in the case of 8 diagonals found, we allocate this much memory => each diagonal found is an array of 2 integers, each integer is 4 bytes worth of memory. Therefore, per diagonal we have 8 bytes worth of memory occupied. 8 bytes used per diagonal per 8 diagonals found = 64 bytes of memory capacity we are allocating here, as an inital guess. The memory capacity will --of course-- grow as needed.
+    if (!totalDiagonals) {
+        fprtinf(stderr, 'Memory allocation failed\n'); //we use 'fprintf to indicate that we want to stream the message to the standard error (stderr) stream. 'printf' is used to ouput something in the terminal (standard output => stdout)
+        *arraySize = 0;
+        return NULL;  //If memory allocation fails, we return NULL (standard way to indicate failure in C)
+    }
 
+    
+}
 
 int main(void) {
     printf("Type \"exit\" to end program\n");
