@@ -42,13 +42,25 @@ int getColumnValue (char column) {
 int** getDiagonals(const int startingArray[2], int* arraySize) {
     int** totalDiagonals = malloc(8 * sizeof(int*)); //Here we start with an arbitrary memory capacity, we say 'in the case of 8 diagonals found, we allocate this much memory => each diagonal found is an array of 2 integers, each integer is 4 bytes worth of memory. Therefore, per diagonal we have 8 bytes worth of memory occupied. 8 bytes used per diagonal per 8 diagonals found = 64 bytes of memory capacity we are allocating here, as an inital guess. The memory capacity will --of course-- grow as needed.
     if (!totalDiagonals) {
-        fprtinf(stderr, 'Memory allocation failed\n'); //we use 'fprintf to indicate that we want to stream the message to the standard error (stderr) stream. 'printf' is used to ouput something in the terminal (standard output => stdout)
+        fprintf(stderr, "Memory allocation failed, try again\n"); //we use 'fprintf to indicate that we want to stream the message to the standard error (stderr) stream. 'printf' is used to ouput something in the terminal (standard output => stdout)
         *arraySize = 0;
         return NULL;  //If memory allocation fails, we return NULL (standard way to indicate failure in C)
     }
 
     int currentColumn, currentRow, potentialColumn, potentialRow; //we modify current column and row, and becomesare our potential column and row, and is 'potential' because we validate it. If truthy, currentColumn, currentRow = potentialColumn, potentialRow. If falsy, we break/stop the loop.
+    currentColumn = startingArray[0];
+    currentRow = startingArray[1];
 
+    while(1) {
+        if (currentColumn <= 0 && currentRow <= 0) break;
+        potentialColumn = currentColumn - 1;
+        potentialRow = currentRow - 1;
+        if (potentialColumn < 0 || potentiaRow < 0) break;
+        int* diagonal = malloc(2 * sizeof(int));
+        if (!diagonal) {
+            fprintf(stderr, "Memory allocation failed, try again\n")
+        }; //If memory allocation failed here, it is better to rerun the program in this case, since totalDiagonals might not have all positions/coordinates that correspond to a diagnoal. Hence our algorithm could say our pieces aren't in a diagonal but because there wasn't enough memory to save all pairs of found coordinates/positions that correspond to diagonals.
+    }
 }
 
 int main(void) {
