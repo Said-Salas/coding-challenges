@@ -39,8 +39,11 @@ int getColumnValue (char column) {
     return columnValue;
 }
 
+//A diagonal consists of an array of length 2 [x, y], where x = column and y = row.
 int** getDiagonals(const int startingArray[2], int* arraySize) {
-    int** totalDiagonals = malloc(8 * sizeof(int*)); //Here we start with an arbitrary memory capacity, we say 'in the case of 8 diagonals found, we allocate this much memory => each diagonal found is an array of 2 integers, each integer is 4 bytes worth of memory. Therefore, per diagonal we have 8 bytes worth of memory occupied. 8 bytes used per diagonal per 8 diagonals found = 64 bytes of memory capacity we are allocating here, as an inital guess. The memory capacity will --of course-- grow as needed.
+    int capacity = 8; //Initial capacity of totalDiagonals (number of pairs it can hold before resizing)
+    int storedDiagonals = 0; //Stored diagonals so far
+    int** pointerArray = malloc(capacity * sizeof(int*)); //Here we start with an arbitrary memory capacity, we say 'in the case of 8 diagonals found, we allocate this much memory => each diagonal found is an array of 2 integers, each integer is 4 bytes worth of memory. Therefore, per diagonal we have 8 bytes worth of memory occupied. 8 bytes used per diagonal per 8 diagonals found = 64 bytes of memory capacity we are allocating here, as an inital guess. The memory capacity will --of course-- grow as needed.
     if (!totalDiagonals) {
         fprintf(stderr, "Memory allocation failed, try again\n"); //we use 'fprintf to indicate that we want to stream the message to the standard error (stderr) stream. 'printf' is used to ouput something in the terminal (standard output => stdout)
         *arraySize = 0;
@@ -58,8 +61,24 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
         if (potentialColumn < 0 || potentiaRow < 0) break;
         int* diagonal = malloc(2 * sizeof(int));
         if (!diagonal) {
-            fprintf(stderr, "Memory allocation failed, try again\n")
-        }; //If memory allocation failed here, it is better to rerun the program in this case, since totalDiagonals might not have all positions/coordinates that correspond to a diagnoal. Hence our algorithm could say our pieces aren't in a diagonal but because there wasn't enough memory to save all pairs of found coordinates/positions that correspond to diagonals.
+            fprintf(stderr, "Memory allocation failed, try again\n");
+            return NULL;
+        }; //If memory allocation failed here, it is better to rerun the program in this case, since totalDiagonals might not have all positions/coordinates that correspond to a diagonal. Hence our algorithm could say our pieces aren't in a diagonal but because there wasn't enough memory to save all pairs of found coordinates/positions that correspond to diagonals.
+        diagonal[0] = potentialColumn;
+        diagonal[1] = potentialRow;
+        if (storedDiagonals == capacity) {
+            capacity *= 2; //If our capacity is full, we resize our allocated memory for more bytes. We multiply by 2 because it is a good number to multiply by--meaning it gives us enough memory for our task without allocating too much unnecessary memory in the RAM (that would be poor efficiency).
+            int** newCapacity = realloc(pointerArray, capacity * sizeof(int*));
+            if (!newCapacity) { 
+                free(diagonal, pointerArray);
+                fprintf("Memory reallocation failed, try again\n");
+                return NULL;
+            }
+            pointerArray = newCapacity;
+        } 
+        pointerArray[storedDiagonals++] = diagonal;
+        currentColumn = potentialColumn;
+        currentRow = potentialRow;
     }
 }
 
