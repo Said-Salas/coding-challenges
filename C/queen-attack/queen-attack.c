@@ -56,14 +56,14 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
 
     while(1) {
         if (currentColumn <= 0 && currentRow <= 0) break;
-        potentialColumn = currentColumn - 1;
+        potentialColumn = currentColumn - 1; // We go to the left over x axis, then downwards (y axis)
         potentialRow = currentRow - 1;
         if (potentialColumn < 0 || potentiaRow < 0) break;
         int* diagonal = malloc(2 * sizeof(int));
         if (!diagonal) {
             fprintf(stderr, "Memory allocation failed, try again\n");
             return NULL;
-        }; //If memory allocation failed here, it is better to rerun the program in this case, since totalDiagonals might not have all positions/coordinates that correspond to a diagonal. Hence our algorithm could say our pieces aren't in a diagonal but because there wasn't enough memory to save all pairs of found coordinates/positions that correspond to diagonals.
+        } //If memory allocation failed here, it is better to rerun the program in this case, since totalDiagonals might not have all positions/coordinates that correspond to a diagonal. Hence our algorithm could say our pieces aren't in a diagonal but because there wasn't enough memory to save all pairs of found coordinates/positions that correspond to diagonals.
         diagonal[0] = potentialColumn;
         diagonal[1] = potentialRow;
         if (storedDiagonals == capacity) {
@@ -80,6 +80,28 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
         currentColumn = potentialColumn;
         currentRow = potentialRow;
     }
+
+    currentColumn = startingArray[0];
+    currentRow = startingArray[1];
+
+    while (1) {
+        if (currentColumn <= 0 && currentRow < 0) break;
+        potentialColumn = currentColumn - 1;
+        potentialRow = currentColumn + 1; //We now go to the left over x axis, then upwards (y axis)
+        if (potentialColumn < 0 || potentialRow < 0) break;
+        int* diagnoal = malloc(2 * sizeof(int));
+        if (!diagonal) {
+            fprintf(stderr, "Memory allocation failed, try again\n");
+            return NULL;
+        }
+        diagonal[0] = potentialColumn;
+        diagonal[1] = potentialRow;
+        if (storedDiagonals == capacity) {
+            capacity *= 2;
+            int** newCapacity =  realloc(pointerArray, capacity *sizeof(int*));
+        }
+    }   
+
 }
 
 int main(void) {
