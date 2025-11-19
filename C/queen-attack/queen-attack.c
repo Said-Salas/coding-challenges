@@ -55,10 +55,9 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
     currentRow = startingArray[1];
 
     while(1) {
-        if (currentColumn <= 0 && currentRow <= 0) break;
+        if (currentColumn <= 0 || currentRow <= 0) break;
         potentialColumn = currentColumn - 1; // We go to the left over x axis, then downwards (y axis)
         potentialRow = currentRow - 1;
-        if (potentialColumn < 0 || potentiaRow < 0) break;
         int* diagonal = malloc(2 * sizeof(int));
         if (!diagonal) {
             fprintf(stderr, "Memory allocation failed, try again\n");
@@ -85,11 +84,10 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
     currentRow = startingArray[1];
 
     while (1) {
-        if (currentColumn <= 0 && currentRow < 0) break;
+        if (currentColumn <= 0 || currentRow >=7 ) break;
         potentialColumn = currentColumn - 1;
         potentialRow = currentColumn + 1; //We now go to the left over x axis, then upwards (y axis)
-        if (potentialColumn < 0 || potentialRow < 0) break;
-        int* diagnoal = malloc(2 * sizeof(int));
+        int* diagonal = malloc(2 * sizeof(int));
         if (!diagonal) {
             fprintf(stderr, "Memory allocation failed, try again\n");
             return NULL;
@@ -99,9 +97,26 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
         if (storedDiagonals == capacity) {
             capacity *= 2;
             int** newCapacity =  realloc(pointerArray, capacity *sizeof(int*));
+            if(!newCapacity) {
+                free(diagonal, pointerArray);
+                fprintf("Memory reallocation failed, try again \n");
+                return NULL;
+            }
+            pointerArray = newCapacity;
         }
-    }   
+        pointerArray[storedDiagonals++] = diagonal;
+        currentColumn = potentialColumn;
+        currentRow = potentialRow;
+    } 
 
+    currentColumn = startingArray[0];
+    currentRow =  startingArray[1];
+    
+    while (1) {
+        if (currentColumn <= 7 || currentRow <= 0) break;
+        potentialColumn = currentColumn + 1;
+        potentialRow = currentRow - 1;
+    }
 }
 
 int main(void) {
