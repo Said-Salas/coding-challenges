@@ -70,7 +70,7 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
             int** newCapacity = realloc(pointerArray, capacity * sizeof(int*));
             if (!newCapacity) { 
                 free(diagonal, pointerArray);
-                fprintf("Memory reallocation failed, try again\n");
+                fprintf(stderr, "Memory reallocation failed, try again\n");
                 return NULL;
             }
             pointerArray = newCapacity;
@@ -99,7 +99,7 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
             int** newCapacity =  realloc(pointerArray, capacity *sizeof(int*));
             if(!newCapacity) {
                 free(diagonal, pointerArray);
-                fprintf("Memory reallocation failed, try again \n");
+                fprintf(stderr, "Memory reallocation failed, try again\n");
                 return NULL;
             }
             pointerArray = newCapacity;
@@ -116,7 +116,30 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
         if (currentColumn <= 7 || currentRow <= 0) break;
         potentialColumn = currentColumn + 1;
         potentialRow = currentRow - 1;
+        int* diagonal = malloc(2 * sizeof(int));
+        if (!diagonal) {
+            fprintf(stderr, "Memory allocation failed, try again\n");
+            return NULL;
+        }
+        diagonal[0] = potentialColumn;
+        diagonal[1] = potentialRow;
+        if (storedDiagonals == capacity) {
+            capacity *= 2;
+            int** newCapacity = realloc(pointerArray, capacity *sizeof(int*));
+            if (!newCapacity) {
+                free(diagonal, pointerArray);
+                fprintf(stderr, "Memory reallocation failed, try again\n");
+                return NULL;
+            }
+            pointerArray = newCapacity;
+        }
+        pointerArray[storedDiagonals++] = diagonal;
+        currentColumn = potentialColumn;
+        currentRow = potentialRow;
     }
+
+    currentColumn = startingArray[0];
+    currentRow = startingArray[1];
 }
 
 int main(void) {
