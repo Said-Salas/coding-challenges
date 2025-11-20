@@ -32,7 +32,7 @@ int getColumnValue (char column) {
             columnValue = 7;
             break;
         default:
-            printf("That column does not exist on the chessboard\n");
+            fprintf(stderr, "That column does not exist on the chessboard\n");
             return 1;
     }
 
@@ -84,7 +84,7 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
     currentRow = startingArray[1];
 
     while (1) {
-        if (currentColumn == 0 || currentRow ==7 ) break;
+        if (currentColumn == 0 || currentRow == 7 ) break;
         potentialColumn = currentColumn - 1;
         potentialRow = currentColumn + 1; //We now go to the left over x axis, then upwards (y axis)
         int* diagonal = malloc(2 * sizeof(int));
@@ -170,8 +170,12 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
     if (storedArrays == 0) {
         free(pointerArray);
         arraySize = 0;
-        
+        printf("Queens are not in diagonal");
+        return 0;
     }
+
+    arraySize = storedArrays;
+    return pointerArray;
 }
 
 int main(void) {
@@ -188,19 +192,19 @@ int main(void) {
         scanf("%s", positionTwo);
     
         if ((strlen(positionOne) > 2 || strlen(positionOne) < 2) || (strlen(positionTwo) > 2 || strlen(positionTwo) < 2)) {
-            printf("Please enter a valid chess position\n");
+            fprintf(stderr, "Please enter a valid chess position\n");
             return 1;
         }
 
         if (!isalpha(tolower(positionOne[0])) || !isalpha(tolower(positionTwo[0]))) {
-            printf("Please enter a valid column letter\n");
+            fprintf(stderr, "Please enter a valid column letter\n");
             return 1;
         }
 
         if (!isdigit(positionOne[1]) || !isdigit(positionTwo[1])) {
-            printf("Please enter a valid row number\n");
+            fprintf(stderr, "Please enter a valid row number\n");
             return 1;
-        }
+        } 
 
         int columnOne = getColumnValue(tolower(positionOne[0]));
         int columnTwo = getColumnValue(tolower(positionTwo[0]));
@@ -208,24 +212,28 @@ int main(void) {
         int rowOne = positionOne[1] - '1';
         int rowTwo = positionTwo[1] - '1';
 
+        if ((rowOne[1] < 0 || rowOne[1] > 7) || (rowTwo[1] < 0 || rowTwo[1] > 7)) {
+            fprintf(stderr, "Enter a existing row number\n");
+            return 1;
+        }
+
         if ((columnOne == columnTwo) && (rowOne == rowTwo)) {
             printf("Positions must be different\n");
             return 1;
         }
         
+        int arraySize;
         if ((columnOne == columnTwo) || (rowOne == rowTwo)) {
             printf("Queens can attack themselves\n");
-        }
-        else {
-            if () {
-                printf("Queens are in a diagonal, therefore can attack themselves\n");
-            }
-            else {
-                printf("Your queens can't attack each other currently\n");
-            }
+        } else {
+            int** diagsPositionOne = getDiagonals([columnOne, rowOne], &arraySize);
+            
+            
         }
     } while (1 > 0);
 
+    for (int i = 0; i < arraySize; i++) free(diagsPositionOne[i]); //Free the content of each hotel room
+    free(diagsPositionOne) //Free the whole hotel building
     return 0;
 }
 
