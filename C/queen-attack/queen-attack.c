@@ -178,6 +178,15 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
     return pointerArray;
 }
 
+int piecesInDiagonal(int** diagonals, int count, int pieceTwo[2]) {
+    for (int i = 0; i < diagonals; i++) {
+        if (diagonals[i][0] == pieceTwo[0] && diagonals[i][1] == pieceTwo[1]) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 int main(void) {
     printf("Type \"exit\" to end program\n");
 
