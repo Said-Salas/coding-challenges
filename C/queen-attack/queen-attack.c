@@ -44,7 +44,7 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
     int capacity = 8; //Initial capacity of totalDiagonals (number of pairs it can hold before resizing)
     int storedDiagonals = 0; //Stored diagonals so far
     int** pointerArray = malloc(capacity * sizeof(int*)); //Here we start with an arbitrary memory capacity, we say 'in the case of 8 diagonals found, we allocate this much memory => each diagonal found is an array of 2 integers, each integer is 4 bytes worth of memory. Therefore, per diagonal we have 8 bytes worth of memory occupied. 8 bytes used per diagonal per 8 diagonals found = 64 bytes of memory capacity we are allocating here, as an inital guess. The memory capacity will --of course-- grow as needed.
-    if (pointerArray) {
+    if (!pointerArray) {
         fprintf(stderr, "Memory allocation failed, try again\n"); //we use 'fprintf to indicate that we want to stream the message to the standard error (stderr) stream. 'printf' is used to ouput something in the terminal (standard output => stdout)
         *arraySize = 0;
         return NULL;  //If memory allocation fails, we return NULL (standard way to indicate failure in C)
@@ -240,12 +240,12 @@ int main(void) {
         if ((columnOne == columnTwo) || (rowOne == rowTwo)) {
             printf("Queens can attack themselves\n");
         } else {
-            diagsPositionOne = getDiagonals([columnOne, rowOne], &arraySize);
-            int result = piecesInDiagonal(diagsPositionOne, arraySize, [columnTwo, rowTwo]);
+            diagsPositionOne = getDiagonals((int[2]){columnOne, rowOne}, &arraySize);
+            int result = piecesInDiagonal(diagsPositionOne, arraySize, (int[2]){columnTwo, rowTwo});
             if (result == 1) {
                 printf("Queens in diagonal. Can attack themselves\n");
             } else {
-                printf("Queens can't attack themselves");
+                printf("Queens can't attack themselves\n");
             }
         }
     } while (1 > 0);
