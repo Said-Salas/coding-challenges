@@ -183,14 +183,18 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
 }
 
 int piecesInDiagonal(int** diagonals, int count, int pieceTwo[2]) {
-   return for (int i = 0; i < count, i++) { //will return true/false
-         printf("%d", diagonals[1]);
-        if (diagonals[i][0] == pieceTwo[0] && diagonals[i][1] == pieceTwo[1]);
+    for (int i = 0; i < count; i++) { //will return true/false
+        if (diagonals[i][0] == pieceTwo[0] && diagonals[i][1] == pieceTwo[1]) {
+            return 1; //Return true caller
+        }
     }
+    return 0; //Return false to caller
 }
 
 int main(void) {
     printf("Type \"exit\" to end program\n");
+    int** diagsPositionOne;
+    int arraySize;
 
     do {
         char positionOne[3] = "";
@@ -223,7 +227,7 @@ int main(void) {
         int rowOne = positionOne[1] - '1';
         int rowTwo = positionTwo[1] - '1';
 
-        if ((rowOne[1] < 0 || rowOne[1] > 7) || (rowTwo[1] < 0 || rowTwo[1] > 7)) {
+        if ((rowOne < 0 || rowOne > 7) || (rowTwo < 0 || rowTwo > 7)) {
             fprintf(stderr, "Enter a existing row number\n");
             return 1;
         }
@@ -233,14 +237,13 @@ int main(void) {
             return 1;
         }
        
-        int arraySize;
-        int** diagsPositionOne;
         if ((columnOne == columnTwo) || (rowOne == rowTwo)) {
             printf("Queens can attack themselves\n");
         } else {
             diagsPositionOne = getDiagonals([columnOne, rowOne], &arraySize);
-            if (piecesInDiagonal(diagsPositionOne, arraySize, [columnTwo, rowTwo])) {
-                printf("Queens in diagonal. Thet can attack themselves\n");
+            int result = piecesInDiagonal(diagsPositionOne, arraySize, [columnTwo, rowTwo]);
+            if (result == 1) {
+                printf("Queens in diagonal. Can attack themselves\n");
             } else {
                 printf("Queens can't attack themselves");
             }
