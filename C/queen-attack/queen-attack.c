@@ -44,7 +44,7 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
     int capacity = 8; //Initial capacity of totalDiagonals (number of pairs it can hold before resizing)
     int storedDiagonals = 0; //Stored diagonals so far
     int** pointerArray = malloc(capacity * sizeof(int*)); //Here we start with an arbitrary memory capacity, we say 'in the case of 8 diagonals found, we allocate this much memory => each diagonal found is an array of 2 integers, each integer is 4 bytes worth of memory. Therefore, per diagonal we have 8 bytes worth of memory occupied. 8 bytes used per diagonal per 8 diagonals found = 64 bytes of memory capacity we are allocating here, as an inital guess. The memory capacity will --of course-- grow as needed.
-    if (!totalDiagonals) {
+    if (pointerArray) {
         fprintf(stderr, "Memory allocation failed, try again\n"); //we use 'fprintf to indicate that we want to stream the message to the standard error (stderr) stream. 'printf' is used to ouput something in the terminal (standard output => stdout)
         *arraySize = 0;
         return NULL;  //If memory allocation fails, we return NULL (standard way to indicate failure in C)
@@ -69,7 +69,8 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
             capacity *= 2; //If our capacity is full, we resize our allocated memory for more bytes. We multiply by 2 because it is a good number to multiply by--meaning it gives us enough memory for our task without allocating too much unnecessary memory in the RAM (that would be poor efficiency).
             int** newCapacity = realloc(pointerArray, capacity * sizeof(int*));
             if (!newCapacity) { 
-                free(diagonal, pointerArray);
+                free(diagonal);
+                free(pointerArray);
                 fprintf(stderr, "Memory reallocation failed, try again\n");
                 return NULL;
             }
@@ -98,7 +99,8 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
             capacity *= 2;
             int** newCapacity =  realloc(pointerArray, capacity *sizeof(int*));
             if(!newCapacity) {
-                free(diagonal, pointerArray);
+                free(diagonal);
+                free(pointerArray);
                 fprintf(stderr, "Memory reallocation failed, try again\n");
                 return NULL;
             }
@@ -127,7 +129,8 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
             capacity *= 2;
             int** newCapacity = realloc(pointerArray, capacity *sizeof(int*));
             if (!newCapacity) {
-                free(diagonal, pointerArray);
+                free(diagonal);
+                free(pointerArray);
                 fprintf(stderr, "Memory reallocation failed, try again\n");
                 return NULL;
             }
@@ -156,7 +159,8 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
             capacity *= 2;
             int** newCapacity = realloc(pointerArray, capacity *sizeof(int*));
             if (!newCapacity) {
-                free(diagonal, pointerArray);
+                free(diagonal);
+                free(pointerArray);
                 fprintf(stderr, "Memory reallocation failed, try again\n");
                 return NULL;
             }
@@ -167,24 +171,22 @@ int** getDiagonals(const int startingArray[2], int* arraySize) {
         currentRow = potentialRow;
     }
 
-    if (storedArrays == 0) {
+    if (storedDiagonals == 0) {
         free(pointerArray);
         arraySize = 0;
         printf("Queens are not in diagonal");
         return 0;
     }
 
-    arraySize = storedArrays;
+    *arraySize = storedDiagonals;
     return pointerArray;
 }
 
 int piecesInDiagonal(int** diagonals, int count, int pieceTwo[2]) {
-    for (int i = 0; i < diagonals; i++) {
-        if (diagonals[i][0] == pieceTwo[0] && diagonals[i][1] == pieceTwo[1]) {
-            return 1;
-        }
+   return for (int i = 0; i < count, i++) { //will return true/false
+         printf("%d", diagonals[1]);
+        if (diagonals[i][0] == pieceTwo[0] && diagonals[i][1] == pieceTwo[1]);
     }
-    return 0;
 }
 
 int main(void) {
@@ -230,19 +232,23 @@ int main(void) {
             printf("Positions must be different\n");
             return 1;
         }
-        
+       
         int arraySize;
+        int** diagsPositionOne;
         if ((columnOne == columnTwo) || (rowOne == rowTwo)) {
             printf("Queens can attack themselves\n");
         } else {
-            int** diagsPositionOne = getDiagonals([columnOne, rowOne], &arraySize);
-            
-            
+            diagsPositionOne = getDiagonals([columnOne, rowOne], &arraySize);
+            if (piecesInDiagonal(diagsPositionOne, arraySize, [columnTwo, rowTwo])) {
+                printf("Queens in diagonal. Thet can attack themselves\n");
+            } else {
+                printf("Queens can't attack themselves");
+            }
         }
     } while (1 > 0);
 
     for (int i = 0; i < arraySize; i++) free(diagsPositionOne[i]); //Free the content of each hotel room
-    free(diagsPositionOne) //Free the whole hotel building
+    free(diagsPositionOne); //Free the whole hotel building
     return 0;
 }
 
