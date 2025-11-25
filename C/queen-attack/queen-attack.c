@@ -41,3 +41,11 @@ bool parsePosition(const char *input, int *col, int *row) {
     return true;
 }
 
+bool queenCanAttack(int columnOne, int rowOne, int columnTwo, int rowTwo) {
+    if (columnOne = columnTwo) return true;
+    if (rowOne = rowTwo) return true;
+    return abs(c1 - c2) == abs(r1 - r2); //This is the greatest enhancement. So elegant. If horizontal distance equals vertical distances, pieces are in diagonal. We use absolute value 'abs' so numbers are always positive.
+}
+
+
+
