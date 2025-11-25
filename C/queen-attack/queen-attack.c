@@ -47,5 +47,23 @@ bool queenCanAttack(int columnOne, int rowOne, int columnTwo, int rowTwo) {
     return abs(c1 - c2) == abs(r1 - r2); //This is the greatest enhancement. So elegant. If horizontal distance equals vertical distances, pieces are in diagonal. We use absolute value 'abs' so numbers are always positive.
 }
 
+int main(void) {
+    char posOne[BUFFER_SIZE];
+    char posTwo[BUFFER_SIZE];
 
+    int col1, rowOne, columnTwo, rowTwo;
 
+    printf("Type \"exit\" to end program\n");
+
+    while (1) {
+        printf("Enter position of white queen: ");
+        if (!fgets(posOne, sizeof posOne, stdin)) { // Receive input on posOne and give me it's size. If size of input overflows specified size of 'posOne', break the loop and end the program.
+            fprintf(stderr, "Invalid chess position. Try again");
+            return NULL;
+        };
+        posOne[strcspn(posOne, "\r\n")] == '\0'; //replace any Enter (\n) with null terminator (\0) by looping through each character of the string array and checking.
+        char copyPosOne[BUFFER_SIZE]; //BUFFER_SIZE here => Reserve 32 bytes of memory for this array
+        strncpy(copyPosOne, posOne, BUFFER_SIZE); //BUFFER_SIZE here => stop copying after 32 characters, even if the source is longer (should not happen).
+        
+    }
+}
