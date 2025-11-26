@@ -51,7 +51,7 @@ int main(void) {
     char posOne[BUFFER_SIZE];
     char posTwo[BUFFER_SIZE];
 
-    int colOne, rowOne, columnTwo, rowTwo;
+    int colOne, rowOne, colTwo, rowTwo;
 
     printf("Type \"exit\" to end program\n");
 
@@ -59,12 +59,12 @@ int main(void) {
         printf("Enter position of white queen: ");
         if (!fgets(posOne, sizeof posOne, stdin)) break; // Receive input on posOne and give me it's size. If size of input overflows specified size of 'posOne' --defined by 'BUFFER_SIZE'-- trim it and keep what can be fitted. For instance, entering a 50 byte string will cause 'fgets' to only store up to 31 characters + null terminator. 1 character = 1 byte(8 bits).
         //However, 'fgets' returns 'False' when the input stream is closed/dead. Pressing Ctrl+D (Mac) or Ctrl+Z (Windows) closes the pipe feeding data to the program and would make the expression falsy, exiting loop and ending the program.
-        posOne[strcspn(posOne, "\r\n")] == '\0'; //replace any Enter (\n) with null terminator (\0) by looping through each character of the string array and checking.
+        posOne[strcspn(posOne, "\r\n")] = '\0'; //replace any Enter (\n) with null terminator (\0) by looping through each character of the string array and checking.
         char copyPosOne[BUFFER_SIZE]; //BUFFER_SIZE here => Reserve 32 bytes of memory for this array
         strncpy(copyPosOne, posOne, BUFFER_SIZE); //BUFFER_SIZE here => stop copying after 32 characters, even if the source is longer (should not happen).
         copyPosOne[BUFFER_SIZE - 1] = '\0';
         strToLower(copyPosOne);
-        if (strcmp(tmp1, "exit") == 0) break;
+        if (strcmp(copyPosOne, "exit") == 0) break;
 
         printf("Enter position of black queen: ");
         if (!fgets(posTwo, sizeof posTwo, stdin)) break;
@@ -75,16 +75,16 @@ int main(void) {
         strToLower(copyPosTwo);
         if(strcmp(copyPosTwo, "exit") == 0) break;
 
-        if (!parsePosition(copyPosOne, &colOne, &colTwo)) {
+        if (!parsePosition(copyPosOne, &colOne, &rowOne)) {
             fprintf(stderr, "Please enter a valid chess position for the white queen.\n");
             continue; //we don't exit loop or end program, rather we skip the current iteration and go back to the top of loop again. This will let user start 'fresh' and enter input again.
         }
-        if (!parsePosition(copyPosTwo, &columnTwo, &rowTwo)) {
+        if (!parsePosition(copyPosTwo, &colTwo, &rowTwo)) {
             fprintf(stderr, "Please enter a valid chess position for the black queen.\n");
             continue;
         }
 
-        if (queenCanAttack(colOne, rowOne, columnTwo, rowTwo)) {
+        if (queenCanAttack(colOne, rowOne, colTwo, rowTwo)) {
             printf("Queens can attack each other\n");
         } else {
             printf("Queens can't attack each other\n");
