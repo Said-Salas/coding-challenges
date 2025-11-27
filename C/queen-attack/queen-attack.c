@@ -21,9 +21,24 @@ int getColumnValue(char column) { //this switch statement is way cleaner
     }
 }
 
-static void strToLower(char *s) { //'S' = 83' (ASCII value) => tolower(83) returns 115. 's' = '115'. char(115) returns 's'.
+void strToLower(char *s) { //'S' = 83' (ASCII value) => tolower(83) returns 115. 's' = '115'. char(115) returns 's'.
     for (; *s; ++s) *s = (char)tolower((unsigned char)*s); // we use 'unsigned char' to make positive the ASCII value because 'tolower()' expects positive values from 0 to 255(ASCII range) and our character could or could not be signed. If signed, char would be negative and would cause bugs.
 }
+
+void trimString(char *str) { 
+    char *start = str; //Trim leading spaces. Var 'start' points to 'str[0]'. 
+    while(*start && isspace((unsigned char)*start)) start++;
+    if (start != str) {
+        memmove(str, start, str(start) + 1);
+    }
+    
+    size_t len = strlen(str); //Trim trailing spaces
+    while (len > 0 && isspace(unsigned char)str[len - 1]) {
+        str[--len] = '\0';
+    } 
+}  
+
+
 
 bool parsePosition(const char *input, int *col, int *row) {
     if (!input) return false;
@@ -42,6 +57,10 @@ bool parsePosition(const char *input, int *col, int *row) {
 }
 
 bool queenCanAttack(int columnOne, int rowOne, int columnTwo, int rowTwo) {
+    if (columnOne == columnTwo && rowOne == rowTwo) {
+        fprintf(stderr, "Positions must be different");
+        return false;
+    }
     if (columnOne == columnTwo) return true;
     if (rowOne == rowTwo) return true;
     return abs(columnOne - columnTwo) == abs(rowOne - rowTwo); //This is the greatest enhancement. So elegant. If horizontal distance equals vertical distances, pieces are in diagonal. We use absolute value 'abs' so numbers are always positive.
@@ -93,3 +112,15 @@ int main(void) {
 
     return 0;
 }
+
+// Given the position of two queens on a chess board, indicate whether or not they are positioned so that they can attack each other.
+
+// In the game of chess, a queen can attack pieces which are on the same row, column, or diagonal.
+
+// A chessboard can be represented by an 8 by 8 array.
+
+// So if you are told the white queen is at c5 (zero-indexed at column 2, row 3) and the black queen at f2 (zero-indexed at column 5, row 6), then you know that the set-up is like so:
+
+// A chess board with two queens. Arrows emanating from the queen at c5 indicate possible directions of capture along file, rank and diagonal.
+
+// You are also able to answer whether the queens can attack each other. In this case, that answer would be yes, they can, because both pieces share a diagonal.
