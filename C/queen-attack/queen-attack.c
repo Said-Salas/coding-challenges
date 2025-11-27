@@ -38,7 +38,11 @@ void trimString(char *str) {
     } 
 }  
 
-
+void flushInputBuffer(const char *buffer) {
+    if(strchr(buffer, '\n') == NULL) {
+        i
+    }
+}
 
 bool parsePosition(const char *input, int *col, int *row) {
     if (!input) return false;
