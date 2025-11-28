@@ -39,8 +39,9 @@ void trimString(char *str) {
 }  
 
 void flushInputBuffer(const char *buffer) {
-    if(strchr(buffer, '\n') == NULL) {
-        i
+    if (strchr(buffer, '\n') == NULL) {
+        int leftoverHolder; //Int type can hold all 257 values from ASCII, and the 257th value is -1, which means (EOF)--end of file. This occurs if input pipe is empty/closed/even broken. Char types can only hold 256 characters. Int holds 0-256. Char holds 0-255. We count the '0' as 1.
+        while ((leftoverHolder = getchar()) != '\n' && leftoverHolder != EOF); //There is no loop body, since 'getchar()' grabs leftover characters in the input stream and passes them to variable 'leftoverHolder'. This process cleans up the input (stdin) already, which is great.
     }
 }
 
@@ -82,7 +83,8 @@ int main(void) {
         printf("Enter position of white queen: ");
         if (!fgets(posOne, sizeof posOne, stdin)) break; // Receive input on posOne and give me it's size. If size of input overflows specified size of 'posOne' --defined by 'BUFFER_SIZE'-- trim it and keep what can be fitted. For instance, entering a 50 byte string will cause 'fgets' to only store up to 31 characters + null terminator. 1 character = 1 byte(8 bits).
         //However, 'fgets' returns 'False' when the input stream is closed/dead. Pressing Ctrl+D (Mac) or Ctrl+Z (Windows) closes the pipe feeding data to the program and would make the expression falsy, exiting loop and ending the program.
-        posOne[strcspn(posOne, "\r\n")] = '\0'; //replace any Enter (\n) with null terminator (\0) by looping through each character of the string array and checking.
+        
+        posOne[strcspn(posOne, "\r\n")] = '\0'; //replace any Enter (\n) with null terminator (\0) by looping through each character of the string array and checking. We use '\r\n' because Windows uses it to end a line and begin a new one, whereas MacOS\Linux only uses '\n' to do the same. The function says: 'Loop through each character of the input and if it matches anything inside '\r\n', replace it with the null terminator "\0"'. Note, it has to match either '\r' or '\n', and won't return a match for only the '\' or only the 'n'.
         char copyPosOne[BUFFER_SIZE]; //BUFFER_SIZE here => Reserve 32 bytes of memory for this array
         strncpy(copyPosOne, posOne, BUFFER_SIZE); //BUFFER_SIZE here => stop copying after 32 characters, even if the source is longer (should not happen).
         copyPosOne[BUFFER_SIZE - 1] = '\0';
