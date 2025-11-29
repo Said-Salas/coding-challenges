@@ -29,11 +29,11 @@ void trimString(char *str) {
     char *start = str; //Trim leading spaces. Var 'start' points to 'str[0]'. 
     while(*start && isspace((unsigned char)*start)) start++;
     if (start != str) {
-        memmove(str, start, str(start) + 1);
+        memmove(str, start, strlen(start) + 1);
     }
     
     size_t len = strlen(str); //Trim trailing spaces
-    while (len > 0 && isspace(unsigned char)str[len - 1]) {
+    while (len > 0 && isspace((unsigned char)str[len - 1])) {
         str[--len] = '\0';
     } 
 }  
@@ -63,7 +63,7 @@ bool parsePosition(const char *input, int *col, int *row) {
 
 bool queenCanAttack(int columnOne, int rowOne, int columnTwo, int rowTwo) {
     if (columnOne == columnTwo && rowOne == rowTwo) {
-        fprintf(stderr, "Positions must be different");
+        fprintf(stderr, "Positions must be different\n");
         return false;
     }
     if (columnOne == columnTwo) return true;
@@ -84,7 +84,10 @@ int main(void) {
         if (!fgets(posOne, sizeof posOne, stdin)) break; // Receive input on posOne and give me it's size. If size of input overflows specified size of 'posOne' --defined by 'BUFFER_SIZE'-- trim it and keep what can be fitted. For instance, entering a 50 byte string will cause 'fgets' to only store up to 31 characters + null terminator. 1 character = 1 byte(8 bits).
         //However, 'fgets' returns 'False' when the input stream is closed/dead. Pressing Ctrl+D (Mac) or Ctrl+Z (Windows) closes the pipe feeding data to the program and would make the expression falsy, exiting loop and ending the program.
         
+        flushInputBuffer(posOne);
         posOne[strcspn(posOne, "\r\n")] = '\0'; //replace any Enter (\n) with null terminator (\0) by looping through each character of the string array and checking. We use '\r\n' because Windows uses it to end a line and begin a new one, whereas MacOS\Linux only uses '\n' to do the same. The function says: 'Loop through each character of the input and if it matches anything inside '\r\n', replace it with the null terminator "\0"'. Note, it has to match either '\r' or '\n', and won't return a match for only the '\' or only the 'n'.
+        trimString(posOne);
+        
         char copyPosOne[BUFFER_SIZE]; //BUFFER_SIZE here => Reserve 32 bytes of memory for this array
         strncpy(copyPosOne, posOne, BUFFER_SIZE); //BUFFER_SIZE here => stop copying after 32 characters, even if the source is longer (should not happen).
         copyPosOne[BUFFER_SIZE - 1] = '\0';
@@ -93,7 +96,11 @@ int main(void) {
 
         printf("Enter position of black queen: ");
         if (!fgets(posTwo, sizeof posTwo, stdin)) break;
+
+        flushInputBuffer(posTwo);
         posTwo[strcspn(posTwo, "\r\n")] = '\0';
+        trimString(posTwo);
+
         char copyPosTwo[BUFFER_SIZE];
         strncpy(copyPosTwo, posTwo, BUFFER_SIZE);
         copyPosTwo[BUFFER_SIZE - 1] = '\0';
