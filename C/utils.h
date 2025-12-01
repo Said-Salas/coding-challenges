@@ -6,3 +6,5 @@
 void strToLower(char *s);
 void trimString(char *str);
 void flushInputBuffer()
+
+#endif

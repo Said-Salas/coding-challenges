@@ -81,8 +81,8 @@ int main(void) {
 
     while (1) {
         printf("Enter position of white queen: ");
-        if (!fgets(posOne, sizeof posOne, stdin)) break; // Receive input on posOne and give me it's size. If size of input overflows specified size of 'posOne' --defined by 'BUFFER_SIZE'-- trim it and keep what can be fitted. For instance, entering a 50 byte string will cause 'fgets' to only store up to 31 characters + null terminator. 1 character = 1 byte(8 bits).
-        //However, 'fgets' returns 'False' when the input stream is closed/dead. Pressing Ctrl+D (Mac) or Ctrl+Z (Windows) closes the pipe feeding data to the program and would make the expression falsy, exiting loop and ending the program.
+        if (!fgets(posOne, sizeof posOne, stdin)) break; // Receive input, and assign it to var 'posOne'. If input overflows the expected/allowed size of posOne --defined by BUFFER_SIZE--, only fit inside 'posOne' up to allowed size. Remaining char in input stream get left hanging--we will clean them. For instance, entering a 50 byte string --only 32 bytes are allowed for this program-- will cause 'fgets' to only store up to 31 characters + null terminator ('\0'). 1 character = 1 byte = 8 bits.
+        //However, 'fgets' doesn't return 'False' because we overflowed input stream. It returns 'False' when the input stream is closed/dead. Pressing Ctrl+D (Mac) or Ctrl+Z (Windows) closes the pipe feeding data to the program and would make the expression falsy, exiting loop and ending the program.
         
         flushInputBuffer(posOne);
         posOne[strcspn(posOne, "\r\n")] = '\0'; //replace any Enter (\n) with null terminator (\0) by looping through each character of the string array and checking. We use '\r\n' because Windows uses it to end a line and begin a new one, whereas MacOS\Linux only uses '\n' to do the same. The function says: 'Loop through each character of the input and if it matches anything inside '\r\n', replace it with the null terminator "\0"'. Note, it has to match either '\r' or '\n', and won't return a match for only the '\' or only the 'n'.
