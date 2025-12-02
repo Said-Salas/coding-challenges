@@ -5,6 +5,6 @@
 
 void strToLower(char *s);
 void trimString(char *str);
-void flushInputBuffer()
+void flushInputBuffer(const char *buffer);
 
 #endif

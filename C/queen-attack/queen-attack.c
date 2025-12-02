@@ -3,6 +3,7 @@
 #include <string.h> //string manipulation functions
 #include <ctype.h> //character functions like seeing if a char is a digit, a number or converting it to upper/lower case
 #include <stdbool.h> //we can use boolean values in our code (true/false)
+#include "../utils.h"
 
 #define CHESSBOARD_SIZE 8 //Text substitution, the preprocessor reads it before compile time. Less error prone, easier to maintain.
 #define BUFFER_SIZE 32 
@@ -18,30 +19,6 @@ int getColumnValue(char column) { //this switch statement is way cleaner
         case 'g': return 6;
         case 'h': return 7;
         default: return -1;
-    }
-}
-
-void strToLower(char *s) { //'S' = 83' (ASCII value) => tolower(83) returns 115. 's' = '115'. char(115) returns 's'.
-    for (; *s; ++s) *s = (char)tolower((unsigned char)*s); // we use 'unsigned char' to make positive the ASCII value because 'tolower()' expects positive values from 0 to 255(ASCII range) and our character could or could not be signed. If signed, char would be negative and would cause bugs.
-}
-
-void trimString(char *str) { 
-    char *start = str; //Trim leading spaces. Var 'start' points to 'str[0]'. 
-    while(*start && isspace((unsigned char)*start)) start++;
-    if (start != str) {
-        memmove(str, start, strlen(start) + 1);
-    }
-    
-    size_t len = strlen(str); //Trim trailing spaces
-    while (len > 0 && isspace((unsigned char)str[len - 1])) {
-        str[--len] = '\0';
-    } 
-}  
-
-void flushInputBuffer(const char *buffer) {
-    if (strchr(buffer, '\n') == NULL) {
-        int leftoverHolder; //Int type can hold all 257 values from ASCII, and the 257th value is -1, which means (EOF)--end of file. This occurs if input pipe is empty/closed/even broken. Char types can only hold 256 characters. Int holds 0-256. Char holds 0-255. We count the '0' as 1.
-        while ((leftoverHolder = getchar()) != '\n' && leftoverHolder != EOF); //There is no loop body, since 'getchar()' grabs leftover characters in the input stream and passes them to variable 'leftoverHolder'. This process cleans up the input (stdin) already, which is great.
     }
 }
 
