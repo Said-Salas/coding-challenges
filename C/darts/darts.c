@@ -1,30 +1,27 @@
 #include <stdio.h>
 #include <string.h>
+#include "../utils.h"
 
-#define BUFFER_SIZE 32
+int parseChar(float x, float y, int *score) {
+   if(!isdigit(x) || !isdigit(y)) return false;
+   if (x < 0 || y < 0) return false;
 
-
-int parseChar(int *xI, int *yI, char *x, char *y) {
-    xI = x - '0';
-    yI = y - '0';
-    if(!isdigit(xI) || !isdigit(yI)) return false;
-    if(!)
-
+    
+   
 }
 
 int main(void) {
-    printf("Press \"exit\" to end program");
+    printf("Type \"Ctrl + D\" to end program");
+    float x, y;
 
     while (1) {
-        char x, y;
-        int xI, yI;
         printf("Enter 'x' coordinate of the dart: ");
-        scanf("%c", &x);
-        if(strcmp(x, "exit") == 0) break;
-        printf("Enter 'y' coordinate of the dart: ")
-        scanf("c", &y);
+        scanf("%f", &x);
 
-        int success = parseChar(&xI, &yI, &x, &y);
+        printf("Enter 'y' coordinate of the dart: ")
+        scanf("%f", &y);
+
+
     }
     return 0;
 }

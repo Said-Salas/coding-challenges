@@ -58,7 +58,7 @@ int main(void) {
 
     while (1) {
         printf("Enter position of white queen: ");
-        if (!fgets(posOne, sizeof posOne, stdin)) break; // Receive input, and assign it to var 'posOne'. If input overflows the expected/allowed size of posOne --defined by BUFFER_SIZE--, only fit inside 'posOne' up to allowed size. Remaining char in input stream get left hanging--we will clean them. For instance, entering a 50 byte string --only 32 bytes are allowed for this program-- will cause 'fgets' to only store up to 31 characters + null terminator ('\0'). 1 character = 1 byte = 8 bits.
+        if (!fgets(posOne, sizeof posOne, stdin)) break; // Receive input, and assign it to var 'posOne'. If input overflows the expected/allowed size of posOne --defined by BUFFER_SIZE--, only fit inside 'posOne' up to allowed size. Remaining char in input stream gets left hanging--we will clean them. For instance, entering a 50 byte string --only 32 bytes are allowed for this program-- will cause 'fgets' to only store up to 31 characters + null terminator ('\0'). 1 character = 1 byte = 8 bits.
         //However, 'fgets' doesn't return 'False' because we overflowed input stream. It returns 'False' when the input stream is closed/dead. Pressing Ctrl+D (Mac) or Ctrl+Z (Windows) closes the pipe feeding data to the program and would make the expression falsy, exiting loop and ending the program.
         
         flushInputBuffer(posOne);
