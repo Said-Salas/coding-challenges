@@ -3,7 +3,7 @@
 #include <math.h>
 #include <ctype.h>
 #include "../utils.h"
-void calculateScore(float x, float y, float *distance) {
+void calculateDistance(float x, float y, float *distance) {
     *distance = x * x + y * y;
     *distance = sqrt(*distance); //Pythagoras Theorem 
 }
@@ -16,16 +16,17 @@ int main(void) {
 
     while (1) {
         int resultX, resultY;
+        int bufferCleaner;
 
         printf("Enter 'x' coordinate of the dart: ");
         resultX = scanf("%f", &x); //validation happens at input
         if (resultX == EOF) break;
-        while(getchar() != '\n' && getchar() != EOF); //This line cleans hanging characters left in input buffer if parsing was unsuccessful. For instance, if user types 't', parsing fails and 't' gets left in input (scanf expects a number since we wrote "%d"), which for the next input the 't' will already be there (in input buffer) and make the next input fail.
+        while((bufferCleaner = getchar()) != '\n' && bufferCleaner != EOF); //This line cleans hanging characters left in input buffer if parsing was unsuccessful. For instance, if user types 't', parsing fails and 't' gets left in input (scanf expects a number since we wrote "%d"), which for the next input the 't' will already be there (in input buffer) and make the next input fail.
 
         printf("Enter 'y' coordinate of the dart: ");
         resultY = scanf("%f", &y);
         if (resultY == EOF) break;
-        while(getchar() != '\n' && getchar() != EOF);
+        while((bufferCleaner = getchar()) != '\n' && bufferCleaner != EOF);
 
         if (resultX != 1 || resultY != 1) {
             fprintf(stderr, "Please enter real numbers.\n");
