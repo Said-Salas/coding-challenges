@@ -9,21 +9,23 @@ void calculateScore(float x, float y, float *distance) {
 }
 
 int main(void) {
-    printf("You have 3 shots\n");
+    printf("Type \"Ctrl + D\" to end program\n");
     float x, y;
     float distance;
     int totalScore = 0;
-    int counter = 0;
 
-    while (counter < 3) {
+    while (1) {
         int resultX, resultY;
+
         printf("Enter 'x' coordinate of the dart: ");
         resultX = scanf("%f", &x); //validation happens at input
-        while(getchar() != '\n'); //This line cleans hanging characters left in input buffer if parsing was unsuccessful. For instance, if user types 't', parsing fails and 't' gets left in input (scanf expects a number since we wrote "%d"), which for the next input the 't' will already be there (in input buffer) and make the next input fail.
+        if (resultX == EOF) break;
+        while(getchar() != '\n' && getchar() != EOF); //This line cleans hanging characters left in input buffer if parsing was unsuccessful. For instance, if user types 't', parsing fails and 't' gets left in input (scanf expects a number since we wrote "%d"), which for the next input the 't' will already be there (in input buffer) and make the next input fail.
 
         printf("Enter 'y' coordinate of the dart: ");
         resultY = scanf("%f", &y);
-        while(getchar() != '\n');
+        if (resultY == EOF) break;
+        while(getchar() != '\n' && getchar() != EOF);
 
         if (resultX != 1 || resultY != 1) {
             fprintf(stderr, "Please enter real numbers.\n");
@@ -43,9 +45,8 @@ int main(void) {
             totalScore += 10;
             printf("Your score is 10.\n");
         }
-        counter++;
     }
-    printf("Total score is: %d", totalScore);
+    printf("\nTotal score is: %d", totalScore);
     return 0;
 }
 
