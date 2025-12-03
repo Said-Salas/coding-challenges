@@ -1,28 +1,49 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
+#include <stdbool.h>
+#include <ctype.h>
 #include "../utils.h"
 
-int parseChar(float x, float y, int *score) {
-   if(!isdigit(x) || !isdigit(y)) return false;
-   if (x < 0 || y < 0) return false;
-
-    
-   
+int calculateScore(float x, float y, float *distance) {
+    *distance = x * x + y * y;
+    *distance = sqrt(*distance); //Pythagoras Theorem 
+    return true;
 }
 
 int main(void) {
-    printf("Type \"Ctrl + D\" to end program");
+    printf("Type \"Ctrl + D\" to end program\n");
     float x, y;
+    float distance;
+    int totalScore;
 
     while (1) {
         printf("Enter 'x' coordinate of the dart: ");
         scanf("%f", &x);
 
-        printf("Enter 'y' coordinate of the dart: ")
+        printf("Enter 'y' coordinate of the dart: ");
         scanf("%f", &y);
 
-
+       bool isValid = calculateScore(x, y, &distance);
+        if (!isValid) {
+            fprintf(stderr, "Please enter real numbers.\n");
+            return -1;
+        } else {
+            if (distance > 10) {
+                printf("Your score is 0.\n");
+            } else if (distance <= 10 && distance > 5) {
+                totalScore++;
+                printf("Your score is 1.\n");
+            } else if (distance <= 5 && distance > 1) {
+                totalScore += 5;
+                printf("Your score is 5.\n");
+            } else {
+                totalScore += 10;
+                printf("Your score is 10.\n");
+            }
+        }
     }
+    printf("Total score is: %d", totalScore);
     return 0;
 }
 
